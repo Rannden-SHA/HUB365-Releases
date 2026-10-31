@@ -36,8 +36,18 @@ It publishes three kinds of apps:
 | ⚙️&nbsp;**Service** | A process (Python, Node, .NET, Streamlit, Grafana, a `.bat`, an `.exe`…) that Hub365 **starts, watches, restarts and publishes**. |
 
 > [!NOTE]
-> This repository only holds the **installers** and the **release notes**. The source code is not
-> published here.
+> This repository only holds the **installers**, the **user manual** and the **release notes**. The
+> source code is not published here.
+
+### 📘 User manual
+
+All of Hub365 step by step, with real screenshots: installation and licensing, the admin console and
+the employee portal, apps, services and deployments, monitoring and alerts, users, security,
+settings, backups, the API, troubleshooting, FAQ and a glossary. Since 2.0.2 it also ships inside
+Hub365 (the admin console's **?** button › *User guide (PDF)*).
+
+- 📄 [Manual in English (PDF)](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest/download/Hub365-Manual-en.pdf)
+- 📄 [Manual en español (PDF)](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest/download/Hub365-Manual-es.pdf)
 
 ## 🧩 Highlights
 
