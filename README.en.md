@@ -154,12 +154,14 @@ entered.</sub>
    [latest release](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest).
 2. **Run it** on the server as administrator. The wizard (Spanish and English) shows the license and
    lets you choose the start-up mode (Windows service with NSSM, bundled), access from the local
-   network, the company name, the port and optional HTTPS. Once the files are copied it asks for
+   network, the company name, the port and optional HTTPS. On a fresh install it also creates your
+   **administrator account**: user name (`admin` by default), name and a password of at least 8
+   characters. Once the files are copied it asks for
    the **license**: save the activation request, send it to info@nextcodeagency.com and activate the
    `.h365lic` file you receive (or do it later from the panel; until then Hub365 is locked).
 3. **Open** `http(s)://SERVER-IP:<port>/admin` (`http` and port 8080 by default) or use the
    *Admin panel* shortcut in the Start menu.
-4. **Sign in** with `admin` / `admin`: you will be asked to change the password and a wizard will guide
+4. **Sign in** with the administrator account you created in the installer and a wizard will guide
    you (company, portal and first apps).
 
 Then turn on two-step verification from *My account*.
@@ -172,8 +174,16 @@ language in *Settings › Portal*; each user can also choose it in *My account*.
 <summary><b>Unattended install</b></summary>
 
 ```bat
-Hub365-Setup-<version>.exe /VERYSILENT /SUPPRESSMSGBOXES /PORT=8080 /LOG="setup.log" /LICENSE="C:\path\license.h365lic"
+Hub365-Setup-<version>.exe /VERYSILENT /SUPPRESSMSGBOXES /PORT=8080 /LOG="setup.log" /LICENSE="C:\path\license.h365lic" ^
+  /ADMINUSER=it-admin /ADMINPASSFILE="C:\path\password.txt"
 ```
+
+`/ADMINUSER=` and `/ADMINPASSFILE=` (a UTF-8 file with the password on its first line, trailing
+spaces removed; UTF-16 or ANSI are rejected, in PowerShell use
+`Set-Content -Path C:\Temp\hub365-admin.txt -Value 'MyPassword' -Encoding utf8 -NoNewline`; the password
+is not accepted on the command line and is never written to the log) create the administrator
+account. Without them, a fresh unattended install creates `admin` / `admin` and asks for a password
+change at sign-in.
 
 In unattended mode the branding keeps the default name and HTTPS stays off: change them later from the
 panel. `/LICENSE=` activates the license and `/SAVEREQUEST="C:\path"` saves the activation request;

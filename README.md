@@ -155,13 +155,15 @@ datos de cada empresa y se muestran tal como se escriben.</sub>
    [última versión](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest).
 2. **Ejecútalo** en el servidor como administrador. El asistente (en español e inglés) muestra la
    licencia y te deja elegir el arranque automático (servicio de Windows con NSSM, incluido), el
-   acceso desde la red local, el nombre de la empresa, el puerto y HTTPS opcional. Al terminar de
+   acceso desde la red local, el nombre de la empresa, el puerto y HTTPS opcional. En una
+   instalación nueva crea además tu **cuenta de administrador**: usuario (por defecto `admin`),
+   nombre y contraseña de al menos 8 caracteres. Al terminar de
    copiar los archivos pide la **licencia**: guarda la solicitud de activación, envíala a
    info@nextcodeagency.com y activa el fichero `.h365lic` que recibas (o hazlo más tarde desde el
    panel; hasta entonces Hub365 queda bloqueado).
 3. **Abre** `http(s)://IP-DEL-SERVIDOR:<puerto>/admin` (`http` y el puerto 8080 por defecto) o usa el
    acceso directo *Panel de administración* del menú Inicio.
-4. **Entra** con `admin` / `admin`: se te pedirá cambiar la contraseña y un asistente te guiará
+4. **Entra** con la cuenta de administrador que creaste en el instalador y un asistente te guiará
    (empresa, portal y primeras aplicaciones).
 
 Después, activa la verificación en dos pasos desde *Mi cuenta*.
@@ -174,8 +176,16 @@ por defecto en *Configuración › Portal*. Cada usuario puede elegir además el
 <summary><b>Instalación desatendida</b></summary>
 
 ```bat
-Hub365-Setup-<versión>.exe /VERYSILENT /SUPPRESSMSGBOXES /PORT=8080 /LOG="setup.log" /LICENSE="C:\ruta\licencia.h365lic"
+Hub365-Setup-<versión>.exe /VERYSILENT /SUPPRESSMSGBOXES /PORT=8080 /LOG="setup.log" /LICENSE="C:\ruta\licencia.h365lic" ^
+  /ADMINUSER=it-admin /ADMINPASSFILE="C:\ruta\contraseña.txt"
 ```
+
+`/ADMINUSER=` y `/ADMINPASSFILE=` (fichero UTF-8 con la contraseña en la primera línea, sin los
+espacios del final; UTF-16 o ANSI se rechazan, en PowerShell usa
+`Set-Content -Path C:\Temp\hub365-admin.txt -Value 'MiContraseña' -Encoding utf8 -NoNewline`; la
+contraseña no se admite en la línea de comandos ni se escribe en el registro) crean la cuenta de
+administrador. Sin ellos, una instalación desatendida nueva crea `admin` / `admin` y pide cambiar la
+contraseña al entrar.
 
 En modo desatendido la marca queda con el nombre por defecto y HTTPS desactivado: cámbialos después
 desde el panel. `/LICENSE=` activa la licencia y `/SAVEREQUEST="C:\ruta"` guarda la solicitud de
