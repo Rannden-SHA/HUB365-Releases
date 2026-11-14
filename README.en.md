@@ -8,8 +8,8 @@
 
 [![version](https://img.shields.io/github/v/release/Rannden-SHA/HUB365-Releases?label=version&color=0b57d0)](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest) [![downloads](https://img.shields.io/github/downloads/Rannden-SHA/HUB365-Releases/total?label=downloads&color=1e8e3e)](https://github.com/Rannden-SHA/HUB365-Releases/releases) [![Windows · Linux · Docker](https://img.shields.io/badge/Windows%20%7C%20Linux%20%7C%20Docker-x64-0078d4)](#-requirements) [![Interface in English and Spanish](https://img.shields.io/badge/interface-EN%20%7C%20ES-9b72cb)](README.md)
 
-<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.1.0/Hub365-Setup-2.1.0.exe"><img src="docs/img/download-windows-en.png" alt="Download Hub365 2.1.0 for Windows" height="62"></a>&nbsp;
-<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.1.0/hub365-2.1.0-linux.tar.gz"><img src="docs/img/download-linux-en.png" alt="Download Hub365 2.1.0 for Linux" height="62"></a>&nbsp;
+<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.2.0/Hub365-Setup-2.2.0.exe"><img src="docs/img/download-windows-en.png" alt="Download Hub365 2.2.0 for Windows" height="62"></a>&nbsp;
+<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.2.0/hub365-2.2.0-linux.tar.gz"><img src="docs/img/download-linux-en.png" alt="Download Hub365 2.2.0 for Linux" height="62"></a>&nbsp;
 <a href="#-linux-and-docker"><img src="docs/img/download-docker-en.png" alt="Install Hub365 with Docker" height="62"></a>
 
 [Español](README.md) · **English**
@@ -70,6 +70,12 @@ Hub365 (the admin console's **?** button › *User guide (PDF)*).
 - Live logs, CPU and RAM metrics
 - Reverse proxy with WebSockets, or optional per-service port for origin isolation
 - Static sites from a ZIP, with versions and rollback
+
+#### 🛍️ App catalog (new in 2.2)
+- NextCode apps ready to install in one click, verified by signature
+- Connected to your users: they sign in with the Hub365 session
+- New version notices and automatic updates at night, with rollback
+- Public catalog: [Hub365-Apps](https://github.com/Rannden-SHA/Hub365-Apps)
 
 #### 📈 Monitoring and alerts
 - Checks for **every** app: uptime and latency
@@ -205,7 +211,7 @@ the result goes to the log and setup never stops because of the license.
 ## 🐧 Linux and Docker
 
 Since 2.1, Hub365 also runs on **Linux x86-64** (tested on Debian 13 and Ubuntu 24.04). Download
-[`hub365-2.1.0-linux.tar.gz`](https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.1.0/hub365-2.1.0-linux.tar.gz) and choose how to run it:
+[`hub365-2.2.0-linux.tar.gz`](https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.2.0/hub365-2.2.0-linux.tar.gz) and choose how to run it:
 
 | | 🐳 Docker (recommended) | ⚙️ systemd service |
 |---|---|---|
@@ -215,7 +221,7 @@ Since 2.1, Hub365 also runs on **Linux x86-64** (tested on Debian 13 and Ubuntu 
 | Update | unpack the new version and run `docker compose up -d --build` again | unpack the new version and run `install.sh` again |
 
 ```bash
-tar xzf hub365-2.1.0-linux.tar.gz && cd hub365-2.1.0
+tar xzf hub365-2.2.0-linux.tar.gz && cd hub365-2.2.0
 docker compose up -d --build          # or, without Docker: sudo sh deploy/linux/install.sh
 ```
 
