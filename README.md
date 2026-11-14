@@ -6,9 +6,11 @@
 
 **Portal de aplicaciones autoalojado para la red local de tu empresa**
 
-[![versión](https://img.shields.io/github/v/release/Rannden-SHA/HUB365-Releases?label=versi%C3%B3n&color=0b57d0)](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest) [![descargas](https://img.shields.io/github/downloads/Rannden-SHA/HUB365-Releases/total?label=descargas&color=1e8e3e)](https://github.com/Rannden-SHA/HUB365-Releases/releases) [![Windows 10 | 11 | Server · x64](https://img.shields.io/badge/Windows-10%20%7C%2011%20%7C%20Server%20%C2%B7%20x64-0078d4)](#-requisitos) [![Interfaz en español e inglés](https://img.shields.io/badge/interfaz-ES%20%7C%20EN-9b72cb)](README.en.md)
+[![versión](https://img.shields.io/github/v/release/Rannden-SHA/HUB365-Releases?label=versi%C3%B3n&color=0b57d0)](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest) [![descargas](https://img.shields.io/github/downloads/Rannden-SHA/HUB365-Releases/total?label=descargas&color=1e8e3e)](https://github.com/Rannden-SHA/HUB365-Releases/releases) [![Windows · Linux · Docker](https://img.shields.io/badge/Windows%20%7C%20Linux%20%7C%20Docker-x64-0078d4)](#-requisitos) [![Interfaz en español e inglés](https://img.shields.io/badge/interfaz-ES%20%7C%20EN-9b72cb)](README.en.md)
 
-<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/latest"><img src="docs/img/download-es.png" alt="Descargar Hub365 para Windows" width="292"></a>
+<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.1.0/Hub365-Setup-2.1.0.exe"><img src="docs/img/download-windows-es.png" alt="Descargar Hub365 2.1.0 para Windows" height="62"></a>&nbsp;
+<a href="https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.1.0/hub365-2.1.0-linux.tar.gz"><img src="docs/img/download-linux-es.png" alt="Descargar Hub365 2.1.0 para Linux" height="62"></a>&nbsp;
+<a href="#-linux-y-docker"><img src="docs/img/download-docker-es.png" alt="Instalar Hub365 con Docker" height="62"></a>
 
 **Español** · [English](README.en.md)
 
@@ -24,7 +26,8 @@
 <br>
 
 **Hub365** reúne todas las aplicaciones de una empresa en un único portal, accesible desde cualquier
-equipo de la red local. Se instala en un servidor Windows, **funciona sin conexión a Internet** y se
+equipo de la red local. Se instala en un servidor Windows o Linux (también con Docker), **funciona sin
+conexión a Internet** y se
 administra entero desde el navegador: marca, aplicaciones, usuarios, permisos, monitorización y
 copias de seguridad, sin tocar código.
 
@@ -151,15 +154,15 @@ datos de cada empresa y se muestran tal como se escriben.</sub>
 
 | Requisito | Detalle |
 |---|---|
-| **Sistema operativo** | Windows 10 / 11 o Windows Server equivalente, **64 bits** |
-| **Permisos** | Una cuenta de **administrador** para instalar e iniciar Hub365 |
+| **Sistema operativo** | Windows 10 / 11 o Windows Server equivalente, **64 bits**; o **Linux x86-64** (Debian 13, Ubuntu 24.04…) con Docker o systemd |
+| **Permisos** | Una cuenta de **administrador** (Windows) o `sudo` (Linux) para instalar Hub365 |
 | **Licencia** | Una **licencia de activación por servidor** de NextCode Agency (ver *Licencia*, al final) |
-| **Python** | **No hace falta**: el instalador incluye un Python 3.12 embebido con todas las dependencias |
+| **Python** | **No hace falta** en Windows ni con Docker: los dos lo incluyen. Con systemd se usa el Python del sistema (3.12 o 3.13) |
 | **Red** | Un puerto TCP libre para el portal (**8080** por defecto); el rango 8400-8499 si publicas servicios en su propio puerto |
 | **Navegadores** | Cualquier navegador actual (Edge, Chrome, Firefox, Safari) |
 | **Internet** | Opcional: solo para comprobar versiones nuevas, enviar alertas a servicios externos o mostrar el widget del tiempo |
 
-## 🚀 Instalación en 4 pasos
+## 🚀 Instalación en Windows en 4 pasos
 
 1. **Descarga** `Hub365-Setup-<versión>.exe` desde *Assets* en la
    [última versión](https://github.com/Rannden-SHA/HUB365-Releases/releases/latest).
@@ -202,6 +205,38 @@ desde el panel. `/LICENSE=` activa la licencia y `/SAVEREQUEST="C:\ruta"` guarda
 activación; el resultado queda en el registro y la instalación nunca se detiene por la licencia.
 </details>
 
+## 🐧 Linux y Docker
+
+Desde la 2.1, Hub365 funciona también en **Linux x86-64** (probado en Debian 13 y Ubuntu 24.04). Descarga
+[`hub365-2.1.0-linux.tar.gz`](https://github.com/Rannden-SHA/HUB365-Releases/releases/download/v2.1.0/hub365-2.1.0-linux.tar.gz) y elige cómo arrancarlo:
+
+| | 🐳 Docker (recomendado) | ⚙️ Servicio systemd |
+|---|---|---|
+| Instalar | `docker compose up -d --build` | `sudo sh deploy/linux/install.sh` |
+| Datos | volumen `hub365-data` (`/data`) | `/var/lib/hub365` |
+| Registro | `docker compose logs -f` | `journalctl -u hub365 -f` |
+| Actualizar | descomprime la versión nueva y repite `docker compose up -d --build` | descomprime la versión nueva y repite `install.sh` |
+
+```bash
+tar xzf hub365-2.1.0-linux.tar.gz && cd hub365-2.1.0
+docker compose up -d --build          # o, sin Docker: sudo sh deploy/linux/install.sh
+```
+
+Después abre `http://IP-DEL-SERVIDOR:8080/admin` y entra con **admin / admin**: se pedirá cambiar la
+contraseña. Activa la licencia desde *Licencia › Descargar solicitud* y completa el asistente.
+
+- **Licencia.** Es la misma licencia por servidor. En Docker queda ligada al **volumen de datos**:
+  recrear o actualizar el contenedor con el mismo volumen la conserva.
+- **Servicios gestionados.** Con Docker se ejecutan dentro del contenedor (con Python 3.12); si
+  necesitan otros programas, se hace una imagen derivada. Con systemd se ejecutan en el sistema con el
+  usuario `hub365`.
+- **Aplicaciones en otros contenedores.** Ponlas en la misma red de Docker y publícalas como enlace con
+  *«Publicar a través del proxy de Hub365»* (`http://<servicio>:<puerto>`).
+- **Pasar de Windows a Linux.** Haz una copia completa en *Sistema › Copias de seguridad*, restáurala en
+  Linux y pide la licencia del servidor nuevo (su huella es distinta).
+
+El paquete incluye la guía completa (`docs/linux-docker.md`) y el manual de usuario la explica paso a paso.
+
 ## ⬆️ Actualizar desde la 1.x
 
 > [!IMPORTANT]
@@ -232,16 +267,21 @@ Las notas completas de cada versión están en su página de
   `api.github.com` desde el servidor) y avisa a los administradores en *Sistema y actualizaciones*.
   La comprobación se puede desactivar.
 - **No se actualiza solo**: descarga el instalador nuevo y ejecútalo encima de la instalación. Conserva
-  la base de datos, las aplicaciones, los usuarios y la configuración.
+  la base de datos, las aplicaciones, los usuarios y la configuración. En Linux, descomprime el paquete
+  nuevo y repite `docker compose up -d --build` o `install.sh`.
 - Sin Internet, el panel indica que no se pudo comprobar; el resto de Hub365 funciona igual.
 
 ## 🛡️ Verificar la descarga
 
-Cada versión indica en sus notas la suma **SHA-256** del instalador. Compárala con la del fichero que
-has descargado (PowerShell):
+Cada versión indica en sus notas la suma **SHA-256** de cada descarga (y la publica en un fichero
+`.sha256` al lado). Compárala con la del fichero que has descargado:
 
 ```powershell
-Get-FileHash .\Hub365-Setup-<versión>.exe -Algorithm SHA256
+Get-FileHash .\Hub365-Setup-<versión>.exe -Algorithm SHA256      # Windows (PowerShell)
+```
+
+```bash
+sha256sum -c hub365-<versión>-linux.tar.gz.sha256               # Linux
 ```
 
 Si no coinciden, no ejecutes el instalador y vuelve a descargarlo.
@@ -250,8 +290,8 @@ Si no coinciden, no ejecutes el instalador y vuelve a descargarlo.
 
 Las más importantes: con los servicios publicados en su propio puerto, las cookies **legibles por
 JavaScript** se comparten entre todos los servicios del mismo servidor (los navegadores no separan
-cookies por puerto); los cambios de puerto, dirección de escucha y HTTPS requieren reiniciar Hub365, y
-solo hay versión para Windows x64. La lista completa está en las
+cookies por puerto), y los cambios de puerto, dirección de escucha y HTTPS requieren reiniciar Hub365
+(en Docker el puerto se cambia en `compose.yaml`). Solo hay versiones para x64. La lista completa está en las
 [notas de cada versión](https://github.com/Rannden-SHA/HUB365-Releases/releases).
 
 ## ❓ Preguntas frecuentes
